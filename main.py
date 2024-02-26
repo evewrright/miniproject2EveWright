@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 students = pd.read_csv("dataset.csv", index_col=0)
 
-
+'''
 # Function that takes a list of the parent qualifications (quals) by which you are trying to filter and finds all rows
 # where either Mother OR Father has one of those qualifications AND where student is enrolled in >0 units 1st sem
 def grade1ByQuals(quals):
@@ -37,10 +37,13 @@ def grade2Both(quals1, quals2):
     avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
     return avgGrade
 
-def gradeByAge(quals1, quals2):
-    filtGroup = students[(students["Mother's qualification"].isin(quals1)) & (students["Father's qualification"].isin(
-    quals1)) & (students["Mother's qualification"].isin(quals2)) | (students["Father's qualification"].isin(
-    quals2)) & (students["Curricular units 2nd sem (enrolled)"] > 0)]
+def grade1ByAge(ages):
+    filtGroup = students[(students["Age at enrollment"].isin(ages)) & (students["Curricular units 1st sem (approved)"] > 0)]
+    avgGrade = filtGroup['Curricular units 1st sem (grade)'].mean()
+    return avgGrade
+
+def grade2ByAge(ages):
+    filtGroup = students[(students["Age at enrollment"].isin(ages)) & (students["Curricular units 2nd sem (approved)"] > 0)]
     avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
     return avgGrade
 
@@ -111,20 +114,49 @@ plt.ylabel('Mean Average Grade of 2nd Semester Units')
 plt.xlabel("Parental Education of Both Parents")
 plt.title("Average of 2nd Semester Grades by BOTH Parental Education")
 plt.show()
+'''
 
+def grade2ByAge():
+    filtGroup = students[students["Curricular units 2nd sem (approved)"] > 0]
+    avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
+    return avgGrade
+
+#print(students['Age at enrollment'].describe())
+
+filtGroup = students[students["Curricular units 2nd sem (approved)"] > 0]
+women = filtGroup[filtGroup['Gender'] == 0]
+men = filtGroup[filtGroup['Gender'] == 1]
+avgGradeW = women.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
+avgGradeM = men.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
+
+avgGradeW.plot(color='red', label='Women', marker='o')
+avgGradeM.plot(color='blue', label='Men', marker='o')
+plt.xlim(17, 28)
+plt.ylim(11.75, 14)
+plt.title('Average 2nd Semester Grades by Age at Enrollment, Grouped by Gender')
+plt.xlabel('Age at enrollment')
+plt.ylabel('Average 2nd Semester Grade')
+plt.show()
+
+#avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
 
 
 '''
-#print(students[students["Mother's qualification"] == 5][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (grade)']])
-#print(students[students["Father's qualification"] == 5][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (grade)']])
+# Find Avg 2nd Semester Grade by Age at Enrollment
+allAges = filtGroup['Age at enrollment'].unique()
+allAgesSorted = allAges.sort_values()
 
-print(students[(students["Mother's qualification"] == 5) & (students["Curricular units 1st sem (grade)"] == 0)][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (approved)']])
-print(students[(students["Father's qualification"] == 5) & (students["Curricular units 1st sem (grade)"] == 0)][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (approved)']])
+minAge = students['Age at enrollment'].min()
+maxAge = students['Age at enrollment'].max()
 
-#print(students[(students["Mother's qualification"] == 5) & (students["Curricular units 1st sem (enrolled)"] > 0)]['Curricular units 1st sem (grade)'].mean())
-#print(students[(students["Father's qualification"] == 5) & (students["Curricular units 1st sem (enrolled)"] > 0)]['Curricular units 1st sem (grade)'].mean())
-
-#print(students[["Age at enrollment"]].describe())
+plt.plot(ages, avgGrades2ByAge, color='green')
+plt.xlim(minAge - 1, maxAge + 1)
+plt.ylim(min(avgGrades2ByAge) - .5, max(avgGrades2ByAge) + .5)
+plt.ylabel('Mean Average Grade of 2nd Semester Units')
+plt.xlabel("Parental Education of Both Parents")
+plt.title("Average of 2nd Semester Grades by Age at Enrollment")
+plt.show()
 '''
+
 
 
