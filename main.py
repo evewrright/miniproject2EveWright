@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 students = pd.read_csv("dataset.csv", index_col=0)
 
-'''
+
 # Function that takes a list of the parent qualifications (quals) by which you are trying to filter and finds all rows
 # where either Mother OR Father has one of those qualifications AND where student is enrolled in >0 units 1st sem
 def grade1ByQuals(quals):
@@ -126,39 +126,22 @@ plt.title('Average 2nd Semester Grades by Age at Enrollment, Grouped by Gender')
 plt.xlabel('Age at enrollment')
 plt.ylabel('Average 2nd Semester Grade')
 plt.show()
-'''
+
+
 
 # Find which parental occupations have highest average grades 1st semester
 newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
-
 momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
 dadOcc = newGroup.groupby(["Father's occupation"])['Curricular units 1st sem (grade)'].mean()
-
-#print(momOcc.head())
-momOcc.plot(kind='bar')
-#plt.bar(momOcc["Mother's occupation"], momOcc['Curricular units 1st sem (grade)'])
-plt.show()
-
-#print(students["Mother's occupation"].value_counts())
-print(students["Mother's occupation"].unique())
-#print(students[students["Mother's occupation"] == 122])
-
+bothOcc = newGroup.groupby(["Father's occupation", "Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
+print(dadOcc)
+print(momOcc.head())
 '''
-#avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
-# Find Avg 2nd Semester Grade by Age at Enrollment
-allAges = filtGroup['Age at enrollment'].unique()
-allAgesSorted = allAges.sort_values()
-
-minAge = students['Age at enrollment'].min()
-maxAge = students['Age at enrollment'].max()
-
-plt.plot(ages, avgGrades2ByAge, color='green')
-plt.xlim(minAge - 1, maxAge + 1)
-plt.ylim(min(avgGrades2ByAge) - .5, max(avgGrades2ByAge) + .5)
-plt.ylabel('Mean Average Grade of 2nd Semester Units')
-plt.xlabel("Parental Education of Both Parents")
-plt.title("Average of 2nd Semester Grades by Age at Enrollment")
+momOcc.plot(kind='bar', color='red')
+plt.ylim(momOcc.min(), momOcc.max())
 plt.show()
+dadOcc.plot(kind='bar', color='blue')
+#plt.bar(momOcc["Mother's occupation"], momOcc['Curricular units 1st sem (grade)'])
 '''
 
 
