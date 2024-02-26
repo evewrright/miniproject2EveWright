@@ -9,7 +9,10 @@ Simple overview of use/purpose.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This project uses a .csv dataset from Kaggle and stores it in a Pandas dataframe. The dataset consists of
+35 fields of student demographic and academic information where each record is a single student.
+It then utilizes matplotlib to graph this data and visually answer some of our questions about the dataset. Finally,
+this project will save all of these graphs as PNG files and save them to a folder called "charts".
 
 ## Getting Started
 
@@ -64,5 +67,5 @@ Inspiration, code snippets, etc.
 * [awesome-readme](https://github.com/matiassingers/awesome-readme)
 * [Kaggle Dataset](https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention?resource=download)
 * [Pandas Documentation](https://pandas.pydata.org/pandas-docs/stable/getting_started/intro_tutorials/04_plotting.html)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
+* [Geeksforgeeks Multi-Column Bar Chart](https://www.geeksforgeeks.org/plot-multiple-columns-of-pandas-dataframe-on-bar-chart-with-matplotlib/)
 * [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
