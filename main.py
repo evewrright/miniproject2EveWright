@@ -3,34 +3,47 @@ import matplotlib.pyplot as plt
 
 students = pd.read_csv("dataset.csv", index_col=0)
 
-# Find students/rows where either mother or father graduated high school AND student was enrolled in >0 units first sem
-#highschool = students[(students["Mother's qualification"] == 1) | (students["Father's qualification"] == 1) & (
-#students["Curricular units 1st sem (enrolled)"] > 0)]
 
 # Function that takes a list of the parent qualifications (quals) by which you are trying to filter and finds all rows
 # where either Mother OR Father has one of those qualifications AND where student is enrolled in >0 units 1st sem
 def grade1ByQuals(quals):
     filtGroup = students[(students["Mother's qualification"].isin(quals)) | (students["Father's qualification"].isin(
-    quals)) & (students["Curricular units 1st sem (enrolled)"] > 0)]
+    quals)) & (students["Curricular units 1st sem (approved)"] > 0)]
     avgGrade = filtGroup['Curricular units 1st sem (grade)'].mean()
     return avgGrade
 
 # Exact same as above function but for 2nd semester grades
 def grade2ByQuals(quals):
     filtGroup = students[(students["Mother's qualification"].isin(quals)) | (students["Father's qualification"].isin(
-    quals)) & (students["Curricular units 2nd sem (enrolled)"] > 0)]
+    quals)) & (students["Curricular units 2nd sem (approved)"] > 0)]
     avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
     return avgGrade
 
 # Function that takes a list of qualifications and finds all rows where the quals are true for BOTH parents
-# and where student enrolled in >0 units. Then finds average of average grade
-# #where quals 1 is the [level or higher] and quals2 is [minimum level]
+# and where student enrolled in >0 units. Then finds average of average grade in 1st sem
+# where quals 1 is the [level or higher] and quals2 is [minimum level]
+def grade1Both(quals1, quals2):
+    filtGroup = students[(students["Mother's qualification"].isin(quals1)) & (students["Father's qualification"].isin(
+    quals1)) & (students["Mother's qualification"].isin(quals2)) | (students["Father's qualification"].isin(
+    quals2)) & (students["Curricular units 1st sem (approved)"] > 0)]
+    avgGrade = filtGroup['Curricular units 1st sem (grade)'].mean()
+    return avgGrade
+
+# Exact same as above function grade1Both, but for 2nd semester grades
 def grade2Both(quals1, quals2):
+    filtGroup = students[(students["Mother's qualification"].isin(quals1)) & (students["Father's qualification"].isin(
+    quals1)) & (students["Mother's qualification"].isin(quals2)) | (students["Father's qualification"].isin(
+    quals2)) & (students["Curricular units 2nd sem (approved)"] > 0)]
+    avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
+    return avgGrade
+
+def gradeByAge(quals1, quals2):
     filtGroup = students[(students["Mother's qualification"].isin(quals1)) & (students["Father's qualification"].isin(
     quals1)) & (students["Mother's qualification"].isin(quals2)) | (students["Father's qualification"].isin(
     quals2)) & (students["Curricular units 2nd sem (enrolled)"] > 0)]
     avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
     return avgGrade
+
 
 # Find Avg 1st Semester Grades by At Least 1 Parent Qualification
 avgGrade_MS = grade1ByQuals([9, 10, 13, 14, 19, 29])
@@ -76,7 +89,7 @@ grade1Both_Doc = grade1Both([5], [5])
 qualsBoth = ['High School', "Bachelor's", "Master's", "Doctorate"]
 avgGrades1Both = [grade1Both_HS, grade1Both_Bach, grade1Both_Mast, grade1Both_Doc]
 
-plt.bar(qualsBoth, avgGrades1Both)
+plt.bar(qualsBoth, avgGrades1Both, color='purple')
 plt.ylim(min(avgGrades1Both) - .5, max(avgGrades1Both) + .5)
 plt.ylabel('Mean Average Grade of 1st Semester Units')
 plt.xlabel("Parental Education of Both Parents")
@@ -92,7 +105,7 @@ grade2Both_Doc = grade2Both([5], [5])
 
 avgGrades2Both = [grade2Both_HS, grade2Both_Bach, grade2Both_Mast, grade2Both_Doc]
 
-plt.bar(qualsBoth, avgGrades2Both)
+plt.bar(qualsBoth, avgGrades2Both, color='purple')
 plt.ylim(min(avgGrades2Both) - .5, max(avgGrades2Both) + .5)
 plt.ylabel('Mean Average Grade of 2nd Semester Units')
 plt.xlabel("Parental Education of Both Parents")
@@ -101,5 +114,17 @@ plt.show()
 
 
 
+'''
+#print(students[students["Mother's qualification"] == 5][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (grade)']])
+#print(students[students["Father's qualification"] == 5][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (grade)']])
+
+print(students[(students["Mother's qualification"] == 5) & (students["Curricular units 1st sem (grade)"] == 0)][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (approved)']])
+print(students[(students["Father's qualification"] == 5) & (students["Curricular units 1st sem (grade)"] == 0)][["Curricular units 1st sem (enrolled)", 'Curricular units 1st sem (approved)']])
+
+#print(students[(students["Mother's qualification"] == 5) & (students["Curricular units 1st sem (enrolled)"] > 0)]['Curricular units 1st sem (grade)'].mean())
+#print(students[(students["Father's qualification"] == 5) & (students["Curricular units 1st sem (enrolled)"] > 0)]['Curricular units 1st sem (grade)'].mean())
+
+#print(students[["Age at enrollment"]].describe())
+'''
 
 
