@@ -42,11 +42,6 @@ def grade1ByAge(ages):
     avgGrade = filtGroup['Curricular units 1st sem (grade)'].mean()
     return avgGrade
 
-def grade2ByAge(ages):
-    filtGroup = students[(students["Age at enrollment"].isin(ages)) & (students["Curricular units 2nd sem (approved)"] > 0)]
-    avgGrade = filtGroup['Curricular units 2nd sem (grade)'].mean()
-    return avgGrade
-
 
 # Find Avg 1st Semester Grades by At Least 1 Parent Qualification
 avgGrade_MS = grade1ByQuals([9, 10, 13, 14, 19, 29])
@@ -114,15 +109,9 @@ plt.ylabel('Mean Average Grade of 2nd Semester Units')
 plt.xlabel("Parental Education of Both Parents")
 plt.title("Average of 2nd Semester Grades by BOTH Parental Education")
 plt.show()
-'''
 
-def grade2ByAge():
-    filtGroup = students[students["Curricular units 2nd sem (approved)"] > 0]
-    avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
-    return avgGrade
 
-#print(students['Age at enrollment'].describe())
-
+# Finds Avg 2nd Semester Grades by Age at Enrollment and then graphs grouped by gender
 filtGroup = students[students["Curricular units 2nd sem (approved)"] > 0]
 women = filtGroup[filtGroup['Gender'] == 0]
 men = filtGroup[filtGroup['Gender'] == 1]
@@ -137,11 +126,25 @@ plt.title('Average 2nd Semester Grades by Age at Enrollment, Grouped by Gender')
 plt.xlabel('Age at enrollment')
 plt.ylabel('Average 2nd Semester Grade')
 plt.show()
+'''
 
-#avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
+# Find which parental occupations have highest average grades 1st semester
+newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
 
+momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
+dadOcc = newGroup.groupby(["Father's occupation"])['Curricular units 1st sem (grade)'].mean()
+
+#print(momOcc.head())
+momOcc.plot(kind='bar')
+#plt.bar(momOcc["Mother's occupation"], momOcc['Curricular units 1st sem (grade)'])
+plt.show()
+
+#print(students["Mother's occupation"].value_counts())
+print(students["Mother's occupation"].unique())
+#print(students[students["Mother's occupation"] == 122])
 
 '''
+#avgGrade = filtGroup.groupby(['Age at enrollment'])['Curricular units 2nd sem (grade)'].mean()
 # Find Avg 2nd Semester Grade by Age at Enrollment
 allAges = filtGroup['Age at enrollment'].unique()
 allAgesSorted = allAges.sort_values()
