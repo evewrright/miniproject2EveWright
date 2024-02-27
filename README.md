@@ -5,8 +5,6 @@
 
 # Mini Project 2
 
-Simple overview of use/purpose.
-
 ## Description
 
 This project uses a .csv dataset from Kaggle and stores it in a Pandas dataframe. The dataset consists of
@@ -16,10 +14,12 @@ this project will save all of these graphs as PNG files and save them to a folde
 
 ## Getting Started
 
-### Dependencies
+### PIP Install Instructions
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* Please run the following
+```
+pip install -r requirements.txt
+```
 * List pip install instructions.
 
 ### Installing
@@ -29,31 +29,19 @@ this project will save all of these graphs as PNG files and save them to a folde
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+* In a terminal window, please type the following:
 ```
-code blocks for commands
-```
-
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
+python main.py
 ```
 
 ## Authors
 
 Contributors names and contact info
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+ex. Eve Wright
 
 ## Version History
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
 * 0.1
     * Initial Release
 
