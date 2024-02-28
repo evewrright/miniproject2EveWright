@@ -99,15 +99,26 @@ plt.show()
 
 
 # Units enrolled - approved = unapproved. Average unapproved units by gender
+'''
 studentsEnr = students[students["Curricular units 1st sem (enrolled)"] > 0]
-studentsEnr['Units not approved'] = studentsEnr['Curricular units 1st sem (enrolled)'].sub(studentsEnr['Curricular units 1st sem (approved)'])
-avgUnapproved = studentsEnr.groupby(['Gender'])['Units not approved'].mean()
+newDF = studentsEnr[['Curricular units 1st sem (enrolled)', 'Curricular units 1st sem (approved)', 'Gender']]
+newDF['Units unapproved'] = newDF['Curricular units 1st sem (enrolled)'] - newDF['Curricular units 1st sem (approved)']
+avgUnapproved = newDF.groupby(['Gender'])['Units unapproved'].mean()
+'''
+studentsEnr = students[students["Curricular units 1st sem (enrolled)"] > 0]
+newDF = studentsEnr[['Curricular units 1st sem (enrolled)', 'Curricular units 1st sem (approved)', 'Gender']]
+newDF['Units unapproved'] = newDF['Curricular units 1st sem (enrolled)'] - newDF['Curricular units 1st sem (approved)']
+avgUnapproved = newDF.groupby(['Gender'])['Units unapproved'].mean()
+#studentsEnr['Units not approved'] = studentsEnr['Curricular units 1st sem (enrolled)'].sub(studentsEnr['Curricular units 1st sem (approved)'])
+#studentsEnr.loc['Units not approved'] = studentsEnr['Curricular units 1st sem (enrolled)'] - studentsEnr['Curricular units 1st sem (approved)']
+#avgUnapproved = studentsEnr.groupby(['Gender'])['Units not approved'].mean()
+#avgUnapproved = studentsEnr.groupby(['Gender'])[(studentsEnr.apply(lambda row: row['Curricular units 1st sem (enrolled)'] - row['Curricular units 1st sem (approved)'], axis=1))].mean()
 avgUnapproved.plot.bar()
 plt.show()
 
 # Credits enrolled 1st semester against inflation rate
-students.plot.scatter(x="GDP", y="Curricular units 1st sem (enrolled)")
-plt.show()
+#students.plot.scatter(x="GDP", y="Curricular units 1st sem (enrolled)")
+#plt.show()
 
 '''
 # Find which parental occupations have highest average grades 1st semester
