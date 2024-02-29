@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 students = pd.read_csv("dataset.csv", index_col=0)
-
+'''
 # Function that takes a list of the parent qualifications (quals) by which you are trying to filter and finds all rows
 # where either Mother OR Father has one of those qualifications AND where student is enrolled in >0 units 1st sem
 def gradeBy1ParentQuals(qualsList, sem):
@@ -97,14 +97,26 @@ plt.xlabel('Gender')
 plt.ylabel('Average Curricular Units Not Approved')
 plt.title('Average Curricular Units Not Approved by Gender')
 plt.show()
+'''
 
 # Barh
 #df2.plot.barh(stacked=True)
 #Scholarship holder based on parent qualification
 newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
-momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
-dadOcc = newGroup.groupby(["Father's occupation"])['Curricular units 1st sem (grade)'].mean()
 
+mychart = newGroup.groupby(["Course"])["Gender"].value_counts()
+print(mychart)
+pivot = pd.pivot_table(data=df, index=['Course'], columns=['Gender'], values='Counts')
+mychart.plot.barh(stacked=True);
+plt.show()
+#for each course how many students are men and how many are women
+
+#agr = newGroup['Course'].value_counts()
+#of all students in agronomy, how many have a parent with occupation
+#momOcc = newGroup.groupby(["Mother's occupation"])['Scholarship holder'].value_counts()
+#dadOcc = newGroup.groupby(["Father's occupation"])["Course"].value_counts()
+#counts = newGroup["Mother's occupation"].value_counts()
+#dadOcc = newGroup.groupby(["Father's occupation"])['Debtor'].value_counts()
 
 
 '''
