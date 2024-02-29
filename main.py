@@ -43,16 +43,6 @@ Doc =[5]
 qualsList = [MS, HS, Bach, Mast, Doc]
 qualsPlusList = [MSPlus, HSPlus, BachPlus, MastPlus, Doc]
 
-'''
-# Find Avg 1st Semester Grade by Parent Qualification of BOTH parents
-avgGrades_1sem_2Par = gradeByBothParentQuals(qualsList, qualsPlusList, '1st')
-plt.bar(quals, avgGrades_1sem_2Par, color='purple')
-plt.ylim(min(avgGrades_1sem_2Par) - .5, max(avgGrades_1sem_2Par) + .5)
-plt.ylabel('Mean Average Grade of 1st Semester Units')
-plt.xlabel("Parental Education of Both Parents")
-plt.title("Average of 1st Semester Grades by BOTH Parental Education")
-plt.show()
-'''
 
 # Avg grade FIRST SEMESTER by PARENT QUALIFICATION
 # Plots a 2 column bar graph with categories being level of parent education
@@ -69,7 +59,7 @@ plt.xlabel('Parental Education')
 plt.title('Average 1st Semester Grade by Parent Level of Education')
 plt.show()
 
-# Avg grade SECOND SEMESTER by PARENT QUALIFICATION
+# Avg grade 2ND SEMESTER by PARENT QUALIFICATION
 avgGrades_2sem_2Par = gradeByBothParentQuals(qualsList, qualsPlusList, '2nd')
 avgGrades_2sem_1Par = gradeBy1ParentQuals(qualsList, '2nd')
 
@@ -97,30 +87,31 @@ plt.xlabel('Age at enrollment')
 plt.ylabel('Average 2nd Semester Grade')
 plt.show()
 
-
 # Units enrolled - approved = unapproved. Average unapproved units by gender
-'''
-studentsEnr = students[students["Curricular units 1st sem (enrolled)"] > 0]
-newDF = studentsEnr[['Curricular units 1st sem (enrolled)', 'Curricular units 1st sem (approved)', 'Gender']]
-newDF['Units unapproved'] = newDF['Curricular units 1st sem (enrolled)'] - newDF['Curricular units 1st sem (approved)']
-avgUnapproved = newDF.groupby(['Gender'])['Units unapproved'].mean()
-'''
-studentsEnr = students[students["Curricular units 1st sem (enrolled)"] > 0]
-newDF = studentsEnr[['Curricular units 1st sem (enrolled)', 'Curricular units 1st sem (approved)', 'Gender']]
-newDF['Units unapproved'] = newDF['Curricular units 1st sem (enrolled)'] - newDF['Curricular units 1st sem (approved)']
-avgUnapproved = newDF.groupby(['Gender'])['Units unapproved'].mean()
-#studentsEnr['Units not approved'] = studentsEnr['Curricular units 1st sem (enrolled)'].sub(studentsEnr['Curricular units 1st sem (approved)'])
-#studentsEnr.loc['Units not approved'] = studentsEnr['Curricular units 1st sem (enrolled)'] - studentsEnr['Curricular units 1st sem (approved)']
-#avgUnapproved = studentsEnr.groupby(['Gender'])['Units not approved'].mean()
-#avgUnapproved = studentsEnr.groupby(['Gender'])[(studentsEnr.apply(lambda row: row['Curricular units 1st sem (enrolled)'] - row['Curricular units 1st sem (approved)'], axis=1))].mean()
+# Get the SettingWithCopyWarning but can't fix it. I tried using .loc in a million ways and still couldn't figure it out
+stuEnrolled = students[students["Curricular units 1st sem (enrolled)"] > 0]
+stuEnrolled['Units unapproved'] = stuEnrolled['Curricular units 1st sem (enrolled)'] - stuEnrolled['Curricular units 1st sem (approved)']
+avgUnapproved = stuEnrolled.groupby(['Gender'])['Units unapproved'].mean()
 avgUnapproved.plot.bar()
+plt.xlabel('Gender')
+plt.ylabel('Average Curricular Units Not Approved')
+plt.title('Average Curricular Units Not Approved by Gender')
 plt.show()
 
+# Barh
+#df2.plot.barh(stacked=True)
+#Scholarship holder based on parent qualification
+newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
+momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
+dadOcc = newGroup.groupby(["Father's occupation"])['Curricular units 1st sem (grade)'].mean()
+
+
+
+'''
 # Credits enrolled 1st semester against inflation rate
 #students.plot.scatter(x="GDP", y="Curricular units 1st sem (enrolled)")
 #plt.show()
 
-'''
 # Find which parental occupations have highest average grades 1st semester
 newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
 momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
@@ -141,4 +132,14 @@ plt.ylim(momOcc.min(), momOcc.max())
 plt.show()
 dadOcc.plot(kind='bar', color='blue')
 #plt.bar(momOcc["Mother's occupation"], momOcc['Curricular units 1st sem (grade)'])
+'''
+'''
+# Find Avg 1st Semester Grade by Parent Qualification of BOTH parents
+avgGrades_1sem_2Par = gradeByBothParentQuals(qualsList, qualsPlusList, '1st')
+plt.bar(quals, avgGrades_1sem_2Par, color='purple')
+plt.ylim(min(avgGrades_1sem_2Par) - .5, max(avgGrades_1sem_2Par) + .5)
+plt.ylabel('Mean Average Grade of 1st Semester Units')
+plt.xlabel("Parental Education of Both Parents")
+plt.title("Average of 1st Semester Grades by BOTH Parental Education")
+plt.show()
 '''
