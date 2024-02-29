@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 students = pd.read_csv("dataset.csv", index_col=0)
-'''
+
 # Function that takes a list of the parent qualifications (quals) by which you are trying to filter and finds all rows
 # where either Mother OR Father has one of those qualifications AND where student is enrolled in >0 units 1st sem
 def gradeBy1ParentQuals(qualsList, sem):
@@ -97,61 +97,17 @@ plt.xlabel('Gender')
 plt.ylabel('Average Curricular Units Not Approved')
 plt.title('Average Curricular Units Not Approved by Gender')
 plt.show()
-'''
 
-# Barh
-#df2.plot.barh(stacked=True)
-#Scholarship holder based on parent qualification
+
+# Course makeup by Gender
 newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
-
-mychart = newGroup.groupby(["Course"])["Gender"].value_counts()
-print(mychart)
-pivot = pd.pivot_table(data=df, index=['Course'], columns=['Gender'], values='Counts')
-mychart.plot.barh(stacked=True);
+myChart = newGroup[["Course", "Gender"]].groupby("Course")["Gender"].value_counts().reset_index(name="Count")
+pivot = myChart.pivot_table(index='Course', columns='Gender', values='Count', fill_value=0)
+ax = pivot.plot.barh(stacked=True, color =['lightseagreen', 'tomato'])
+ax.set_title('The Number of Students', fontsize=20)
+#ax.set_ylim(0,500)
+#ax.set_xticklabels(['A','B','C'], rotation=0)
+#mychart.plot.barh(stacked=True);
 plt.show()
-#for each course how many students are men and how many are women
-
-#agr = newGroup['Course'].value_counts()
-#of all students in agronomy, how many have a parent with occupation
-#momOcc = newGroup.groupby(["Mother's occupation"])['Scholarship holder'].value_counts()
-#dadOcc = newGroup.groupby(["Father's occupation"])["Course"].value_counts()
-#counts = newGroup["Mother's occupation"].value_counts()
-#dadOcc = newGroup.groupby(["Father's occupation"])['Debtor'].value_counts()
 
 
-'''
-# Credits enrolled 1st semester against inflation rate
-#students.plot.scatter(x="GDP", y="Curricular units 1st sem (enrolled)")
-#plt.show()
-
-# Find which parental occupations have highest average grades 1st semester
-newGroup = students[students["Curricular units 1st sem (approved)"] > 0]
-momOcc = newGroup.groupby(["Mother's occupation"])['Curricular units 1st sem (grade)'].mean()
-dadOcc = newGroup.groupby(["Father's occupation"])['Curricular units 1st sem (grade)'].mean()
-bothOcc = newGroup.groupby(["Father's occupation", "Mother's occupation"])['Curricular units 1st sem (grade)'].mean().reset_index()
-#print(dadOcc)
-#print(momOcc)
-#print(bothOcc)
------
-occupation = newGroup["Father's occupation"].unique()
-occupationM = newGroup["Mother's occupation"].unique()
-plt.bar(occupationM, momOcc, color='red')
-plt.bar(occupation, dadOcc, color='blue')
-plt.show()
----------
-momOcc.plot(kind='bar', color='red')
-plt.ylim(momOcc.min(), momOcc.max())
-plt.show()
-dadOcc.plot(kind='bar', color='blue')
-#plt.bar(momOcc["Mother's occupation"], momOcc['Curricular units 1st sem (grade)'])
-'''
-'''
-# Find Avg 1st Semester Grade by Parent Qualification of BOTH parents
-avgGrades_1sem_2Par = gradeByBothParentQuals(qualsList, qualsPlusList, '1st')
-plt.bar(quals, avgGrades_1sem_2Par, color='purple')
-plt.ylim(min(avgGrades_1sem_2Par) - .5, max(avgGrades_1sem_2Par) + .5)
-plt.ylabel('Mean Average Grade of 1st Semester Units')
-plt.xlabel("Parental Education of Both Parents")
-plt.title("Average of 1st Semester Grades by BOTH Parental Education")
-plt.show()
-'''
