@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ### Installing
 
 * Download the [Higher Education Predictors of Student Success Dataset](https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention?resource=download)
-as a CSV and name it 'students'. Then, add the students.csv file to this repository.
+as a CSV and name it 'dataset'. Then, add the dataset.csv file to this repository.
 
 ### Executing program
 
