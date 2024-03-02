@@ -7,10 +7,13 @@
 
 ## Description
 
-This project uses a .csv dataset from Kaggle and stores it in a Pandas dataframe. The dataset consists of
-35 fields of student demographic and academic information where each record is a single student.
-It then utilizes matplotlib to graph this data and visually answer some of our questions about the dataset. Finally,
-this project will save all of these graphs as PNG files and save them to a folder called "charts".
+This project utilizes a .csv dataset sourced from Kaggle, importing it into a Pandas dataframe for analysis. 
+The dataset contains 35 fields of student demographic and academic information, with each record representing an individual student.
+Using matplotlib, the project generates visualizations to address key questions about student academic success. 
+These visualizations are then saved as PNG files and stored in a folder named "charts".
+
+Please note that the institution from which this data was sourced is not an American institution and therefore 
+uses different grading scales, higher ed terminology. etc.
 
 ## Getting Started
 
@@ -23,8 +26,8 @@ pip install -r requirements.txt
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Download the [Higher Education Predictors of Student Success Dataset](https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention?resource=download)
+as a CSV and name it 'students'. Then, add the students.csv file to this repository.
 
 ### Executing program
 
@@ -44,15 +47,13 @@ ex. Eve Wright
 * 0.1
     * Initial Release
 
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
+* [Matplotlib Documentation](https://matplotlib.org/stable/tutorials/pyplot.html#plotting-with-categorical-variables)
 * [Kaggle Dataset](https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention?resource=download)
 * [Pandas Documentation](https://pandas.pydata.org/pandas-docs/stable/getting_started/intro_tutorials/04_plotting.html)
-* [Geeksforgeeks Multi-Column Bar Chart](https://www.geeksforgeeks.org/plot-multiple-columns-of-pandas-dataframe-on-bar-chart-with-matplotlib/)
+* [Multi-Column Bar Chart - Geeksforgeeks](https://www.geeksforgeeks.org/plot-multiple-columns-of-pandas-dataframe-on-bar-chart-with-matplotlib/)
+* [Stacked Bar Chart - Medium](https://medium.com/@jb.ranchana/easy-way-to-create-stacked-bar-graphs-from-dataframe-19cc97c86fe3)
 * [XKCD Colors](https://xkcd.com/color/rgb/)
