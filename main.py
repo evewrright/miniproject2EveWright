@@ -1,3 +1,7 @@
+# INF601 - Advanced Programming in Python
+# Eve Wright
+# Mini Project 2
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
